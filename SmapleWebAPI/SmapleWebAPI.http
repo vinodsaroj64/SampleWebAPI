@@ -1,0 +1,6 @@
+@SmapleWebAPI_HostAddress = http://localhost:5014
+
+GET {{SmapleWebAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
