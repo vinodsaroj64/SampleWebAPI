@@ -7,6 +7,7 @@ using SmapleWebAPI.Data;
 using SmapleWebAPI.Model;
 using SmapleWebAPI.Repository;
 using System.Reflection;
+using SmapleWebAPI.Services;
 
 namespace SmapleWebAPI.Controllers
 {
@@ -14,36 +15,37 @@ namespace SmapleWebAPI.Controllers
     [ApiController]
     public class ProductsController: ControllerBase
     {
-        private readonly IProductRepository _productRepository;
+        private readonly IProductService _productService;
 
-        public ProductsController(IProductRepository context)
+        public ProductsController(IProductService productService)
         {
-            _productRepository = context;
+            _productService = productService;
         }
 
         // GET: api/Products
         [HttpGet]
-        public  ActionResult<IEnumerable<Product>> GetProduct()
+        public ActionResult<IEnumerable<Product>> GetProduct()
         {
             try
             {
-                if (_productRepository! == null)
+                if (_productService! == null)
                 {
                     return NotFound();
                 }
+                return _productService.GetALlProducts();
             }
             catch (Exception ex)
             {
-                
+                return BadRequest();
             }
-            return  _productRepository.GetALlProducts();
+            return null;
         }
 
         // GET: api/Products/5
         [HttpGet("{id}")]
         public ActionResult<Product> GetProduct(int id)
         {
-            var product = _productRepository.GetProductsById(id);
+            var product = _productService.GetProductsById(id);
             if (product == null)
                 return NotFound();
 

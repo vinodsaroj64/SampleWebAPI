@@ -1,6 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using SmapleWebAPI.Data;
+using SmapleWebAPI.Extensions;
 using SmapleWebAPI.Repository;
+using SmapleWebAPI.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +16,7 @@ builder.Services.AddDbContext<ProductAPIContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("ProductAPIContext") ?? throw new InvalidOperationException("Connection string 'ProductAPIContext' not found.")));
 
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddProductServices();
 
 var app = builder.Build();
 
